@@ -14,11 +14,23 @@
     <context:component-scan base-package="com.juran" />
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://localhost:3306/maven?serverTimezone=UTC"></property>
+<!--        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>-->
+        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+        <property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/maven?serverTimezone=UTC"></property>
+<!--        <property name="url" value="jdbc:mysql://localhost:3306/maven?serverTimezone=UTC"></property>-->
         <property name="username" value="root"></property>
         <property name="password" value="0000"></property>
     </bean>
+    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg ref="dataSourceSpied" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="SQL : "/>
+            </bean>
+        </property>
+    </bean>
+
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:/mybatis-config.xml" />
@@ -33,8 +45,13 @@
       <property name="suffix" value=".jsp" />
     </bean>
 
+    <!-- Mapper -->
     <bean id="testMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
       <property name="mapperInterface" value="com.juran.test.TestMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="boardDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+      <property name="mapperInterface" value="com.juran.board.dao.BoardDAO" />
       <property name="sqlSessionFactory" ref="sqlSessionFactory" />
     </bean>
 
