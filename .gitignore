@@ -13,3 +13,6 @@
 log/
 target/
 out/
+/src/main/webapp/vendor/**
+/src/main/webapp/vendor/
+/src/main/webapp/vendor

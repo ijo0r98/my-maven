@@ -18,7 +18,7 @@ public class BoardController {
 
     @GetMapping("")
     public ModelAndView main() throws Exception {
-        ModelAndView mv = new ModelAndView("board/main");
+        ModelAndView mv = new ModelAndView("board/index");
         mv.addObject("boardList", boardService.boardList());
         System.out.println(boardService.boardList());
         return mv;
