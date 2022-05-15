@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>My MAVEN Project</title>
+    <title>My MAVEN Project22</title>
 
     <!-- Custom fonts for this template-->
     <link href="${pageContext.request.contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
